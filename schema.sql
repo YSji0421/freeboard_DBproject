@@ -23,4 +23,4 @@ CREATE TABLE posts (
 -- 초기 관리자 및 사용자 데이터
 INSERT INTO users (email, user_name, password) VALUES ('admin@example.com', '관리자', 'admin123');
 INSERT INTO users (email, user_name, password) VALUES ('user@example.com', '홍길동', '1234');
-select * from users;
+
