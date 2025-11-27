@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/nav.css">
+</head>
+<body>
+    <%- include('../partials/nav', {user: user}) %>
+    
+    <div class="container">
+        <h2><%= post.title %></h2>
+        <div style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; color: #666;">
+            작성자: <%= post.user_name %> | 
+            조회수: <%= post.views %> | 
+            작성일: <%= new Date(post.created_at).toLocaleString() %>
+        </div>
+
+        <div style="min-height: 200px; line-height: 1.6;">
+            <%= post.content %>
+        </div>
+        
+        <hr>
+
+        <div style="margin-top: 20px;">
+            <a href="/board" class="button" style="background: #6c757d;">목록</a>
+
+            <% if (user && (user.user_id === post.user_id || user.email === 'admin@example.com')) { %>
+                <a href="/board/edit/<%= post.post_id %>" class="button">수정</a>
+                <a href="/board/delete/<%= post.post_id %>" class="button delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

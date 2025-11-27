@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <style>
+        .badge-notice { background: #ffc107; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .badge-free { background: #e9ecef; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #666; }
+        .row-notice { background-color: #fff9db; } /* 공지사항 줄 강조 */
+    </style>
+</head>
+<body>
+    <%- include('../partials/nav', {user: user}) %>
+    
+    <div class="container">
+        <h1>자유게시판</h1>
+
+        <div style="float: right; margin-bottom: 10px;">
+            <form action="/board" method="GET">
+                <input type="text" name="search" placeholder="제목 검색" value="<%= search %>">
+                <button type="submit">검색</button>
+            </form>
+        </div>
+
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th width="10%">분류</th>
+                    <th width="50%">제목</th> <th width="15%">작성자</th>
+                    <th width="15%">작성일</th>
+                    <th width="10%">조회</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(posts.length > 0) { %>
+                    <% posts.forEach(post => { %>
+                        <tr class="<%= post.type === 'notice' ? 'row-notice' : '' %>">
+                            <td>
+                                <% if(post.type === 'notice') { %>
+                                    <span class="badge-notice">공지</span>
+                                <% } else { %>
+                                    <span class="badge-free">일반</span>
+                                <% } %>
+                            </td>
+                            <td style="text-align: left;">
+                                <a href="/board/view/<%= post.post_id %>" style="<%= post.type === 'notice' ? 'font-weight:bold;' : '' %>">
+                                    <%= post.title %>
+                                </a>
+                            </td>
+                            <td><%= post.user_name %></td>
+                            <td><%= new Date(post.created_at).toLocaleDateString() %></td>
+                            <td><%= post.views %></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr><td colspan="5">게시글이 없습니다.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+            <div class="pagination">
+                <% for(let i=1; i<=totalPages; i++) { %>
+                    <a href="/board?page=<%= i %>&search=<%= search %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <% } %>
+            </div>
+            
+            <% if (user) { %>
+                <a href="/board/write" class="button">글쓰기</a>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+    "name": "nodejs-board",
+    "version": "1.0.0",
+    "description": "Node.js Board Project",
+    "main": "src/app.js",
+    "scripts": {
+      "start": "node src/app.js",
+      "dev": "nodemon src/app.js"
+    },
+    "dependencies": {
+      "body-parser": "^1.20.2",
+      "ejs": "^3.1.9",
+      "express": "^4.18.2",
+      "express-session": "^1.17.3",
+      "mysql2": "^3.6.5"
+    },
+    "devDependencies": {
+      "nodemon": "^3.0.2"
+    }
+  }
